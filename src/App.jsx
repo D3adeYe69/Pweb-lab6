@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { marked } from 'marked'
+import IngredientBank from './IngredientBank'
 
 function sample() {
   return [
-    { id: 1, title: 'Pancakes', ingredients: ['1 cup flour','1 egg','1 cup milk'], steps: 'Mix ingredients. Cook on skillet.', tags: ['breakfast'], prepTime: '10m', cookTime: '10m', servings: '2', notes: '', liked: false }
+    { id: 1, title: 'Pancakes', ingredients: [ { name: 'Flour', amount: '1 cup', image: 'https://via.placeholder.com/80?text=Flour' }, { name: 'Egg', amount: '1', image: 'https://via.placeholder.com/80?text=Egg' }, { name: 'Milk', amount: '1 cup', image: 'https://via.placeholder.com/80?text=Milk' } ], steps: 'Mix ingredients. Cook on skillet.', tags: ['breakfast'], prepTime: '10m', cookTime: '10m', servings: '2', notes: '', liked: false }
   ]
 }
 
@@ -64,7 +65,13 @@ export default function App(){
             <h2>{editing.title}</h2>
             <div className="meta">{editing.tags && editing.tags.map(t=> <small key={t} className="tag">{t}</small>)}</div>
             <h4>Ingredients</h4>
-            <ul>{editing.ingredients.map((ing,i)=><li key={i}>{ing}</li>)}</ul>
+            <ul>{(editing.ingredients||[]).map((ing,i)=>(
+              <li key={i} className="detail-ing">
+                {ing.image && <img src={ing.image} alt={ing.name} />}
+                <strong>{ing.name}</strong>
+                {ing.amount && <span className="amt"> — {ing.amount}</span>}
+              </li>
+            ))}</ul>
             <h4>Steps</h4>
             <div className="steps" dangerouslySetInnerHTML={{__html: marked.parse(editing.steps||'')}} />
             {editing.notes && <div className="notes"><h4>Notes</h4><p>{editing.notes}</p></div>}
@@ -75,10 +82,15 @@ export default function App(){
   )
 }
 
+function normalizeInitialIngredients(arr){
+  if (!arr) return []
+  return arr.map(i => typeof i === 'string' ? { name: i, amount: '', image: '' } : i)
+}
+
 function RecipeForm({ onCancel, onSave, initial }){
   const isEdit = !!initial
   const [title, setTitle] = useState(initial?.title||'')
-  const [ingredients, setIngredients] = useState(initial?.ingredients||[''])
+  const [ingredients, setIngredients] = useState(()=> normalizeInitialIngredients(initial?.ingredients) || [{ name: '', amount: '', image: '' }])
   const [steps, setSteps] = useState(initial?.steps||'')
   const [tags, setTags] = useState((initial?.tags||[]).join(', '))
   const [prepTime, setPrepTime] = useState(initial?.prepTime||'')
@@ -86,12 +98,16 @@ function RecipeForm({ onCancel, onSave, initial }){
   const [servings, setServings] = useState(initial?.servings||'')
   const [notes, setNotes] = useState(initial?.notes||'')
 
+  function addIngredientFromBank(item){
+    setIngredients(prev => [{ name: item.name, amount: '', image: item.image }, ...prev])
+  }
+
   function save(e){
     e.preventDefault()
     const rec = {
       id: initial?.id || Date.now(),
       title: title.trim() || 'Untitled',
-      ingredients: ingredients.map(i=>i.trim()).filter(Boolean),
+      ingredients: ingredients.map(i=>({ name: i.name.trim(), amount: (i.amount||'').trim(), image: i.image||'' })).filter(i=>i.name),
       steps, tags: tags.split(',').map(t=>t.trim()).filter(Boolean), prepTime, cookTime, servings, notes, liked: initial?.liked||false
     }
     onSave(rec)
@@ -100,15 +116,19 @@ function RecipeForm({ onCancel, onSave, initial }){
   return (
     <form className="recipe-form" onSubmit={save}>
       <div className="row"><label>Title<input value={title} onChange={e=>setTitle(e.target.value)} required/></label></div>
+
       <div className="row">
         <label>Ingredients</label>
+        <IngredientBank onAdd={addIngredientFromBank} />
         {ingredients.map((ing,i)=> (
           <div key={i} className="ing-row">
-            <input value={ing} onChange={e=>{ const copy=[...ingredients]; copy[i]=e.target.value; setIngredients(copy)}} />
+            {ing.image && <img src={ing.image} alt={ing.name} className="ing-thumb" />}
+            <input value={ing.name} onChange={e=>{ const copy=[...ingredients]; copy[i]={...copy[i], name:e.target.value}; setIngredients(copy)}} placeholder="Ingredient name" />
+            <input value={ing.amount} onChange={e=>{ const copy=[...ingredients]; copy[i]={...copy[i], amount:e.target.value}; setIngredients(copy)}} placeholder="Amount (e.g. 1 cup)" />
             <button type="button" onClick={()=>setIngredients(prev=>prev.filter((_,idx)=>idx!==i))}>Remove</button>
           </div>
         ))}
-        <button type="button" onClick={()=>setIngredients(prev=>[...prev,''])}>Add ingredient</button>
+        <button type="button" onClick={()=>setIngredients(prev=>[...prev,{ name:'', amount:'', image:'' }])}>Add custom ingredient</button>
       </div>
 
       <div className="row"><label>Steps (markdown)<textarea value={steps} onChange={e=>setSteps(e.target.value)} /></label></div>

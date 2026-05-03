@@ -12,10 +12,21 @@ main{margin-top:18px}
 .card.liked{outline:2px solid rgba(14,165,233,0.12)}
 .recipe-form{display:flex;flex-direction:column;gap:12px}
 .recipe-form input,.recipe-form textarea{width:100%;padding:8px;border-radius:8px;border:1px solid #e6edf3}
-.ing-row{display:flex;gap:8px}
+.ing-row{display:flex;gap:8px;align-items:center}
+.ing-thumb{width:40px;height:40px;border-radius:6px;object-fit:cover}
 .form-actions{display:flex;gap:8px}
 .steps{background:transparent;padding:8px}
 .detail .steps{padding:8px;border-radius:8px;background:#fbfbfb}
+.detail-ing{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.detail-ing img{width:36px;height:36px;border-radius:6px;object-fit:cover}
+.detail-ing .amt{color:var(--muted);margin-left:6px}
+
+.ingredient-bank{margin:8px 0}
+.bank-grid{display:flex;gap:8px;flex-wrap:wrap}
+.ingredient-card{width:96px;padding:8px;border-radius:8px;background:var(--card);box-shadow:0 6px 18px rgba(14,30,37,0.04);display:flex;flex-direction:column;align-items:center;gap:6px}
+.ingredient-card img{width:64px;height:64px;object-fit:cover;border-radius:8px}
+.ingredient-card .ing-name{font-size:13px}
+.ingredient-card button{padding:6px 8px;border-radius:6px;border:none;background:var(--accent);color:white;cursor:pointer}
 
 /* dark */
 body.dark{--bg:#071028;--fg:#e6eef8;--muted:#9fb0c8;--accent:#60a5fa;--card:#0f1720}
