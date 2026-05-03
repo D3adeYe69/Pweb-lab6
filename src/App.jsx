@@ -2,94 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { marked } from 'marked'
 import IngredientBank from './IngredientBank'
 
-function sample() {
-  return [
-    { id: 1, title: 'Pancakes', ingredients: [ { name: 'Flour', amount: '1 cup', image: '🌾' }, { name: 'Egg', amount: '1', image: '🥚' }, { name: 'Milk', amount: '1 cup', image: '🥛' } ], steps: 'Mix ingredients. Cook on skillet.', tags: ['breakfast'], prepTime: '10m', cookTime: '10m', servings: '2', notes: '', liked: false }
-  ]
-}
-
-export default function App(){
-  const [recipes, setRecipes] = useState(()=>{
-    try{ const raw = localStorage.getItem('recipes'); return raw?JSON.parse(raw):sample() }catch{return sample()}
-  })
-  const [view, setView] = useState('list')
-  const [editing, setEditing] = useState(null)
-  const [dark, setDark] = useState(()=>localStorage.getItem('theme')==='dark')
-
-  useEffect(()=>{
-    document.body.classList.toggle('dark', dark)
-    localStorage.setItem('theme', dark ? 'dark' : 'light')
-  }, [dark])
-
-  useEffect(()=>{ try{ localStorage.setItem('recipes', JSON.stringify(recipes)) }catch{} },[recipes])
-
-  function addRecipe(r){ setRecipes(prev=>[r,...prev]); setView('list') }
-  function updateRecipe(r){ setRecipes(prev=>prev.map(p=>p.id===r.id?r:p)); setEditing(null); setView('list') }
-  function removeRecipe(id){ setRecipes(prev=>prev.filter(p=>p.id!==id)) }
-  function toggleLike(id){ setRecipes(prev=>prev.map(p=>p.id===id?{...p,liked:!p.liked}:p)) }
-
-  return (
-    <div className="app">
-      <header>
-        <div className="header-left">
-          <h1>🍳 Recipe Box</h1>
-        </div>
-        <div className="header-right">
-          <button className="theme-btn" onClick={()=>setDark(d=>!d)}>{dark?'☀️':'🌙'}</button>
-          <button onClick={()=>{setEditing(null); setView('create')}} className="new-btn">+ New Recipe</button>
-        </div>
-      </header>
-
-      <main>
-        {view==='list' && (
-          <section className="list">
-            {recipes.length===0 && <p>No recipes yet.</p>}
-            <div className="grid">
-              {recipes.map(r=> (
-                <article key={r.id} className={'card '+(r.liked?'liked':'')}>
-                  <h3>{r.title}</h3>
-                  <div className="meta">{r.tags && r.tags.map(t=> <small key={t} className="tag">{t}</small>)}</div>
-                  <p className="times">Prep: {r.prepTime} • Cook: {r.cookTime} • Serves: {r.servings}</p>
-                  <div className="card-actions">
-                    <button onClick={()=>{ setEditing(r); setView('edit') }}>Edit</button>
-                    <button onClick={()=>removeRecipe(r.id)}>Delete</button>
-                    <button onClick={()=>toggleLike(r.id)}>{r.liked?'★':'☆'}</button>
-                    <button onClick={()=>{ setView('detail'); setEditing(r) }}>View</button>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {(view==='create' || view==='edit') && (
-          <section className="form-area">
-            <RecipeForm onCancel={()=>setView('list')} onSave={view==='create'?addRecipe:updateRecipe} initial={editing} />
-          </section>
-        )}
-
-        {view==='detail' && editing && (
-          <section className="detail">
-            <button onClick={()=>{ setView('list'); setEditing(null) }}>Back</button>
-            <h2>{editing.title}</h2>
-            <div className="meta">{editing.tags && editing.tags.map(t=> <small key={t} className="tag">{t}</small>)}</div>
-            <h4>Ingredients</h4>
-            <ul>{(editing.ingredients||[]).map((ing,i)=>(
-              <li key={i} className="detail-ing">
-                {ing.image && <span className="emoji-icon">{ing.image}</span>}
-                <strong>{ing.name}</strong>
-                {ing.amount && <span className="amt"> — {ing.amount}</span>}
-              </li>
-            ))}</ul>
-            <h4>Steps</h4>
-            <div className="steps" dangerouslySetInnerHTML={{__html: marked.parse(editing.steps||'')}} />
-            {editing.notes && <div className="notes"><h4>Notes</h4><p>{editing.notes}</p></div>}
-          </section>
-        )}
-      </main>
-    </div>
-  )
-}
+const API_URL = 'http://localhost:3001'
 
 function normalizeInitialIngredients(arr){
   if (!arr) return []
@@ -153,5 +66,195 @@ function RecipeForm({ onCancel, onSave, initial }){
         <button type="button" onClick={onCancel}>Cancel</button>
       </div>
     </form>
+  )
+}
+
+export default function App(){
+  const [recipes, setRecipes] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [view, setView] = useState('list')
+  const [editing, setEditing] = useState(null)
+  const [dark, setDark] = useState(()=>localStorage.getItem('theme')==='dark')
+  const [filter, setFilter] = useState('')
+
+  // Fetch recipes on mount
+  useEffect(()=>{
+    async function fetchRecipes(){
+      try{
+        const res = await fetch(`${API_URL}/recipes`)
+        const data = await res.json()
+        setRecipes(data)
+      }catch(err){
+        console.error('Failed to fetch recipes:', err)
+      }finally{
+        setLoading(false)
+      }
+    }
+    fetchRecipes()
+  }, [])
+
+  // Handle dark mode
+  useEffect(()=>{
+    document.body.classList.toggle('dark', dark)
+    localStorage.setItem('theme', dark ? 'dark' : 'light')
+  }, [dark])
+
+  async function addRecipe(r){
+    try{
+      const res = await fetch(`${API_URL}/recipes`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(r)
+      })
+      const newRecipe = await res.json()
+      setRecipes(prev=>[newRecipe,...prev])
+      setView('list')
+    }catch(err){
+      console.error('Failed to add recipe:', err)
+    }
+  }
+
+  async function updateRecipe(r){
+    try{
+      const res = await fetch(`${API_URL}/recipes/${r.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(r)
+      })
+      const updated = await res.json()
+      setRecipes(prev=>prev.map(p=>p.id===r.id?updated:p))
+      setEditing(null)
+      setView('list')
+    }catch(err){
+      console.error('Failed to update recipe:', err)
+    }
+  }
+
+  async function removeRecipe(id){
+    try{
+      await fetch(`${API_URL}/recipes/${id}`, { method: 'DELETE' })
+      setRecipes(prev=>prev.filter(p=>p.id!==id))
+    }catch(err){
+      console.error('Failed to delete recipe:', err)
+    }
+  }
+
+  async function toggleLike(id){
+    const recipe = recipes.find(r=>r.id===id)
+    if(!recipe) return
+    const updated = {...recipe, liked: !recipe.liked}
+    try{
+      await fetch(`${API_URL}/recipes/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updated)
+      })
+      setRecipes(prev=>prev.map(p=>p.id===id?updated:p))
+    }catch(err){
+      console.error('Failed to toggle like:', err)
+    }
+  }
+
+  const allTags = [...new Set(recipes.flatMap(r=>r.tags||[]))].filter(Boolean).sort()
+  const filtered = filter ? recipes.filter(r=>(r.tags||[]).includes(filter)) : recipes
+  const liked = filtered.filter(r=>r.liked)
+  const notLiked = filtered.filter(r=>!r.liked)
+
+  if(loading) return <div className="app"><main style={{padding:'32px',marginTop:'80px'}}>Loading recipes...</main></div>
+
+  return (
+    <div className="app">
+      <header>
+        <div className="header-left">
+          <h1>🍳 Recipe Box</h1>
+        </div>
+        <div className="header-right">
+          <button className="theme-btn" onClick={()=>setDark(d=>!d)}>{dark?'☀️':'🌙'}</button>
+          <button onClick={()=>{setEditing(null); setView('create')}} className="new-btn">+ New Recipe</button>
+        </div>
+      </header>
+
+      <main>
+        {view==='list' && (
+          <section className="list">
+            <div className="filter-section">
+              <label>Cuisine:</label>
+              <button className={'filter-btn '+(filter===''?'active':'')} onClick={()=>setFilter('')}>All</button>
+              {allTags.map(tag=> (
+                <button key={tag} className={'filter-btn '+(filter===tag?'active':'')} onClick={()=>setFilter(tag)}>{tag}</button>
+              ))}
+            </div>
+            
+            {liked.length > 0 && (
+              <div className="favs-section">
+                <h2>⭐ Favorites</h2>
+                <div className="grid">
+                  {liked.map(r=> (
+                    <article key={r.id} className="card liked">
+                      <h3>{r.title}</h3>
+                      <div className="meta">{r.tags && r.tags.map(t=> <small key={t} className="tag">{t}</small>)}</div>
+                      <p className="times">Prep: {r.prepTime} • Cook: {r.cookTime} • Serves: {r.servings}</p>
+                      <div className="card-actions">
+                        <button onClick={()=>{ setEditing(r); setView('edit') }}>Edit</button>
+                        <button onClick={()=>removeRecipe(r.id)}>Delete</button>
+                        <button onClick={()=>toggleLike(r.id)}>★</button>
+                        <button onClick={()=>{ setView('detail'); setEditing(r) }}>View</button>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {filtered.length===0 && <p>No recipes yet.</p>}
+            {notLiked.length > 0 && (
+              <>
+                {liked.length > 0 && <h2 style={{marginTop:'32px',marginBottom:'16px',fontSize:'18px',fontWeight:'700'}}>Other Recipes</h2>}
+                <div className="grid">
+                  {notLiked.map(r=> (
+                    <article key={r.id} className='card'>
+                      <h3>{r.title}</h3>
+                      <div className="meta">{r.tags && r.tags.map(t=> <small key={t} className="tag">{t}</small>)}</div>
+                      <p className="times">Prep: {r.prepTime} • Cook: {r.cookTime} • Serves: {r.servings}</p>
+                      <div className="card-actions">
+                        <button onClick={()=>{ setEditing(r); setView('edit') }}>Edit</button>
+                        <button onClick={()=>removeRecipe(r.id)}>Delete</button>
+                        <button onClick={()=>toggleLike(r.id)}>☆</button>
+                        <button onClick={()=>{ setView('detail'); setEditing(r) }}>View</button>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </>
+            )}
+          </section>
+        )}
+
+        {(view==='create' || view==='edit') && (
+          <section className="form-area">
+            <RecipeForm onCancel={()=>setView('list')} onSave={view==='create'?addRecipe:updateRecipe} initial={editing} />
+          </section>
+        )}
+
+        {view==='detail' && editing && (
+          <section className="detail">
+            <button onClick={()=>{ setView('list'); setEditing(null) }}>Back</button>
+            <h2>{editing.title}</h2>
+            <div className="meta">{editing.tags && editing.tags.map(t=> <small key={t} className="tag">{t}</small>)}</div>
+            <h4>Ingredients</h4>
+            <ul>{(editing.ingredients||[]).map((ing,i)=>(
+              <li key={i} className="detail-ing">
+                {ing.image && <span className="emoji-icon">{ing.image}</span>}
+                <strong>{ing.name}</strong>
+                {ing.amount && <span className="amt"> — {ing.amount}</span>}
+              </li>
+            ))}</ul>
+            <h4>Steps</h4>
+            <div className="steps" dangerouslySetInnerHTML={{__html: marked.parse(editing.steps||'')}} />
+            {editing.notes && <div className="notes"><h4>Notes</h4><p>{editing.notes}</p></div>}
+          </section>
+        )}
+      </main>
+    </div>
   )
 }

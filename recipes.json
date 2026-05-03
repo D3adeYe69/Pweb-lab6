@@ -1,0 +1,907 @@
+{
+  "nextId": 23,
+  "recipes": [
+    {
+      "id": 1,
+      "title": "Pasta Carbonara",
+      "ingredients": [
+        {
+          "name": "Pasta",
+          "amount": "400g",
+          "image": "🍝"
+        },
+        {
+          "name": "Egg",
+          "amount": "3",
+          "image": "🥚"
+        },
+        {
+          "name": "Bacon",
+          "amount": "200g",
+          "image": "🥓"
+        },
+        {
+          "name": "Cheese",
+          "amount": "100g",
+          "image": "🧀"
+        }
+      ],
+      "steps": "1. Cook pasta. 2. Fry bacon until crispy. 3. Mix eggs with cheese. 4. Toss hot pasta with bacon, then add egg mixture off heat. 5. Season with pepper.",
+      "tags": [
+        "italian",
+        "pasta"
+      ],
+      "prepTime": "10m",
+      "cookTime": "15m",
+      "servings": "4",
+      "notes": "Use Pecorino Romano if possible",
+      "liked": true
+    },
+    {
+      "id": 2,
+      "title": "Caesar Salad",
+      "ingredients": [
+        {
+          "name": "Lettuce",
+          "amount": "1 head",
+          "image": "🥬"
+        },
+        {
+          "name": "Parmesan",
+          "amount": "50g",
+          "image": "🧀"
+        },
+        {
+          "name": "Croutons",
+          "amount": "1 cup",
+          "image": "🍞"
+        },
+        {
+          "name": "Egg",
+          "amount": "1",
+          "image": "🥚"
+        },
+        {
+          "name": "Lemon",
+          "amount": "1",
+          "image": "🍋"
+        }
+      ],
+      "steps": "1. Wash and chop lettuce. 2. Boil egg for 1 min. 3. Mix mayo, anchovy, lemon juice, garlic. 4. Toss with lettuce and croutons. 5. Top with Parmesan.",
+      "tags": [
+        "salad",
+        "vegetarian"
+      ],
+      "prepTime": "15m",
+      "cookTime": "5m",
+      "servings": "2",
+      "notes": "",
+      "liked": false
+    },
+    {
+      "id": 3,
+      "title": "Chicken Tikka Masala",
+      "ingredients": [
+        {
+          "name": "Chicken",
+          "amount": "600g",
+          "image": "🍗"
+        },
+        {
+          "name": "Yogurt",
+          "amount": "200ml",
+          "image": "🥛"
+        },
+        {
+          "name": "Tomato",
+          "amount": "4",
+          "image": "🍅"
+        },
+        {
+          "name": "Onion",
+          "amount": "2",
+          "image": "🧅"
+        },
+        {
+          "name": "Garlic",
+          "amount": "4 cloves",
+          "image": "🧄"
+        }
+      ],
+      "steps": "1. Marinate chicken in yogurt & spices for 2 hours. 2. Grill or pan-fry chicken. 3. Sauté onions and garlic. 4. Add tomatoes and cream. 5. Add chicken back in. 6. Simmer 15 mins.",
+      "tags": [
+        "indian",
+        "chicken"
+      ],
+      "prepTime": "130m",
+      "cookTime": "25m",
+      "servings": "4",
+      "notes": "Serve with rice or naan",
+      "liked": false
+    },
+    {
+      "id": 4,
+      "title": "Beef Tacos",
+      "ingredients": [
+        {
+          "name": "Beef",
+          "amount": "500g",
+          "image": "🥩"
+        },
+        {
+          "name": "Tortilla",
+          "amount": "8",
+          "image": "🌮"
+        },
+        {
+          "name": "Lettuce",
+          "amount": "1/2 head",
+          "image": "🥬"
+        },
+        {
+          "name": "Tomato",
+          "amount": "2",
+          "image": "🍅"
+        },
+        {
+          "name": "Cheese",
+          "amount": "100g",
+          "image": "🧀"
+        }
+      ],
+      "steps": "1. Brown beef with taco spices. 2. Warm tortillas. 3. Fill with beef, lettuce, tomato, cheese. 4. Top with salsa and sour cream.",
+      "tags": [
+        "mexican",
+        "beef"
+      ],
+      "prepTime": "10m",
+      "cookTime": "10m",
+      "servings": "4",
+      "notes": "",
+      "liked": false
+    },
+    {
+      "id": 5,
+      "title": "Margherita Pizza",
+      "ingredients": [
+        {
+          "name": "Dough",
+          "amount": "400g",
+          "image": "🍞"
+        },
+        {
+          "name": "Tomato",
+          "amount": "200ml sauce",
+          "image": "🍅"
+        },
+        {
+          "name": "Mozzarella",
+          "amount": "250g",
+          "image": "🧀"
+        },
+        {
+          "name": "Basil",
+          "amount": "10 leaves",
+          "image": "🌿"
+        }
+      ],
+      "steps": "1. Roll out dough. 2. Spread tomato sauce. 3. Add mozzarella. 4. Bake at 220°C for 12-15 mins. 5. Top with fresh basil.",
+      "tags": [
+        "italian",
+        "pizza",
+        "vegetarian"
+      ],
+      "prepTime": "15m",
+      "cookTime": "15m",
+      "servings": "2",
+      "notes": "Use fresh mozzarella for best results",
+      "liked": false
+    },
+    {
+      "id": 6,
+      "title": "Mushroom Risotto",
+      "ingredients": [
+        {
+          "name": "Rice",
+          "amount": "300g",
+          "image": "🍚"
+        },
+        {
+          "name": "Mushroom",
+          "amount": "300g",
+          "image": "🍄"
+        },
+        {
+          "name": "Onion",
+          "amount": "1",
+          "image": "🧅"
+        },
+        {
+          "name": "White Wine",
+          "amount": "200ml",
+          "image": "🍷"
+        },
+        {
+          "name": "Parmesan",
+          "amount": "50g",
+          "image": "🧀"
+        }
+      ],
+      "steps": "1. Sauté onion and mushrooms. 2. Add rice, stir 2 mins. 3. Deglaze with wine. 4. Add broth ladle by ladle, stirring. 5. After 18 mins, add cheese and butter.",
+      "tags": [
+        "italian",
+        "vegetarian"
+      ],
+      "prepTime": "10m",
+      "cookTime": "20m",
+      "servings": "3",
+      "notes": "",
+      "liked": false
+    },
+    {
+      "id": 7,
+      "title": "Thai Green Curry",
+      "ingredients": [
+        {
+          "name": "Chicken",
+          "amount": "500g",
+          "image": "🍗"
+        },
+        {
+          "name": "Coconut Milk",
+          "amount": "400ml",
+          "image": "🥥"
+        },
+        {
+          "name": "Green Curry Paste",
+          "amount": "3 tbsp",
+          "image": "🌶️"
+        },
+        {
+          "name": "Bell Pepper",
+          "amount": "2",
+          "image": "🫑"
+        },
+        {
+          "name": "Basil",
+          "amount": "10 leaves",
+          "image": "🌿"
+        }
+      ],
+      "steps": "1. Heat oil, fry curry paste 1 min. 2. Add coconut milk and chicken. 3. Simmer 10 mins. 4. Add peppers and basil. 5. Cook 5 more mins.",
+      "tags": [
+        "thai",
+        "chicken"
+      ],
+      "prepTime": "15m",
+      "cookTime": "20m",
+      "servings": "4",
+      "notes": "Serve over rice",
+      "liked": false
+    },
+    {
+      "id": 8,
+      "title": "Lemon Garlic Salmon",
+      "ingredients": [
+        {
+          "name": "Salmon",
+          "amount": "600g",
+          "image": "🐟"
+        },
+        {
+          "name": "Lemon",
+          "amount": "2",
+          "image": "🍋"
+        },
+        {
+          "name": "Garlic",
+          "amount": "4 cloves",
+          "image": "🧄"
+        },
+        {
+          "name": "Oil",
+          "amount": "3 tbsp",
+          "image": "🫒"
+        },
+        {
+          "name": "Butter",
+          "amount": "50g",
+          "image": "🧈"
+        }
+      ],
+      "steps": "1. Preheat oven to 200°C. 2. Place salmon on foil. 3. Top with lemon, garlic, butter. 4. Bake 15 mins. 5. Drizzle with lemon juice.",
+      "tags": [
+        "seafood",
+        "healthy"
+      ],
+      "prepTime": "10m",
+      "cookTime": "15m",
+      "servings": "3",
+      "notes": "",
+      "liked": false
+    },
+    {
+      "id": 9,
+      "title": "Vegetable Stir-Fry",
+      "ingredients": [
+        {
+          "name": "Broccoli",
+          "amount": "300g",
+          "image": "🥦"
+        },
+        {
+          "name": "Carrot",
+          "amount": "2",
+          "image": "🥕"
+        },
+        {
+          "name": "Onion",
+          "amount": "1",
+          "image": "🧅"
+        },
+        {
+          "name": "Soy Sauce",
+          "amount": "3 tbsp",
+          "image": "🍶"
+        },
+        {
+          "name": "Garlic",
+          "amount": "3 cloves",
+          "image": "🧄"
+        }
+      ],
+      "steps": "1. Heat wok or large pan. 2. Add oil, stir-fry garlic. 3. Add vegetables in order of cooking time. 4. Toss constantly. 5. Add soy sauce. 6. Serve hot.",
+      "tags": [
+        "asian",
+        "vegetarian",
+        "vegan"
+      ],
+      "prepTime": "15m",
+      "cookTime": "10m",
+      "servings": "3",
+      "notes": "Serve over rice",
+      "liked": false
+    },
+    {
+      "id": 10,
+      "title": "Tomato Minestrone",
+      "ingredients": [
+        {
+          "name": "Tomato",
+          "amount": "400g canned",
+          "image": "🍅"
+        },
+        {
+          "name": "Carrot",
+          "amount": "2",
+          "image": "🥕"
+        },
+        {
+          "name": "Onion",
+          "amount": "1",
+          "image": "🧅"
+        },
+        {
+          "name": "Pasta",
+          "amount": "100g",
+          "image": "🍝"
+        },
+        {
+          "name": "Broccoli",
+          "amount": "150g",
+          "image": "🥦"
+        }
+      ],
+      "steps": "1. Sauté onion and carrot. 2. Add tomatoes and broth. 3. Bring to boil. 4. Add pasta and vegetables. 5. Simmer 15 mins. 6. Season and serve.",
+      "tags": [
+        "italian",
+        "soup",
+        "vegetarian"
+      ],
+      "prepTime": "15m",
+      "cookTime": "20m",
+      "servings": "4",
+      "notes": "",
+      "liked": false
+    },
+    {
+      "id": 11,
+      "title": "Ratatouille",
+      "ingredients": [
+        {
+          "name": "Eggplant",
+          "amount": "1",
+          "image": "🍆"
+        },
+        {
+          "name": "Zucchini",
+          "amount": "1",
+          "image": "🥒"
+        },
+        {
+          "name": "Tomato",
+          "amount": "3",
+          "image": "🍅"
+        },
+        {
+          "name": "Onion",
+          "amount": "1",
+          "image": "🧅"
+        },
+        {
+          "name": "Garlic",
+          "amount": "3 cloves",
+          "image": "🧄"
+        }
+      ],
+      "steps": "1. Chop all vegetables. 2. Sauté onion and garlic. 3. Add eggplant and zucchini. 4. Cook 10 mins. 5. Add tomatoes, herbs. 6. Simmer 20 mins.",
+      "tags": [
+        "french",
+        "vegetarian",
+        "vegan"
+      ],
+      "prepTime": "20m",
+      "cookTime": "35m",
+      "servings": "4",
+      "notes": "Great as side dish",
+      "liked": false
+    },
+    {
+      "id": 12,
+      "title": "Shrimp Paella",
+      "ingredients": [
+        {
+          "name": "Rice",
+          "amount": "300g",
+          "image": "🍚"
+        },
+        {
+          "name": "Shrimp",
+          "amount": "500g",
+          "image": "🦐"
+        },
+        {
+          "name": "Onion",
+          "amount": "1",
+          "image": "🧅"
+        },
+        {
+          "name": "Garlic",
+          "amount": "4 cloves",
+          "image": "🧄"
+        },
+        {
+          "name": "Bell Pepper",
+          "amount": "1",
+          "image": "🫑"
+        }
+      ],
+      "steps": "1. Sauté onion, garlic, pepper. 2. Add rice, stir 2 mins. 3. Add broth and saffron. 4. Cook 15 mins. 5. Top with shrimp. 6. Cook 5 mins more.",
+      "tags": [
+        "spanish",
+        "seafood"
+      ],
+      "prepTime": "15m",
+      "cookTime": "25m",
+      "servings": "5",
+      "notes": "",
+      "liked": false
+    },
+    {
+      "id": 13,
+      "title": "Fish Tacos",
+      "ingredients": [
+        {
+          "name": "Fish",
+          "amount": "600g",
+          "image": "🐟"
+        },
+        {
+          "name": "Tortilla",
+          "amount": "8",
+          "image": "🌮"
+        },
+        {
+          "name": "Cabbage",
+          "amount": "1/2 head",
+          "image": "🥬"
+        },
+        {
+          "name": "Lime",
+          "amount": "2",
+          "image": "🍋"
+        },
+        {
+          "name": "Cilantro",
+          "amount": "10g",
+          "image": "🌿"
+        }
+      ],
+      "steps": "1. Season and pan-fry fish until flaky. 2. Warm tortillas. 3. Shred cabbage. 4. Assemble with fish, cabbage, cilantro. 5. Squeeze lime over.",
+      "tags": [
+        "mexican",
+        "seafood"
+      ],
+      "prepTime": "15m",
+      "cookTime": "12m",
+      "servings": "4",
+      "notes": "Add chipotle mayo for heat",
+      "liked": false
+    },
+    {
+      "id": 14,
+      "title": "Vegetable Fried Rice",
+      "ingredients": [
+        {
+          "name": "Rice",
+          "amount": "300g cooked",
+          "image": "🍚"
+        },
+        {
+          "name": "Egg",
+          "amount": "2",
+          "image": "🥚"
+        },
+        {
+          "name": "Carrot",
+          "amount": "1",
+          "image": "🥕"
+        },
+        {
+          "name": "Pea",
+          "amount": "100g",
+          "image": "🫛"
+        },
+        {
+          "name": "Soy Sauce",
+          "amount": "2 tbsp",
+          "image": "🍶"
+        }
+      ],
+      "steps": "1. Heat oil in wok. 2. Scramble eggs, set aside. 3. Stir-fry vegetables. 4. Add rice, breaking clumps. 5. Add soy sauce and eggs. 6. Toss well.",
+      "tags": [
+        "asian",
+        "vegetarian",
+        "quick"
+      ],
+      "prepTime": "10m",
+      "cookTime": "10m",
+      "servings": "3",
+      "notes": "Use cold rice for better texture",
+      "liked": false
+    },
+    {
+      "id": 15,
+      "title": "Beef Chili",
+      "ingredients": [
+        {
+          "name": "Beef",
+          "amount": "500g",
+          "image": "🥩"
+        },
+        {
+          "name": "Tomato",
+          "amount": "400g canned",
+          "image": "🍅"
+        },
+        {
+          "name": "Kidney Beans",
+          "amount": "300g",
+          "image": "🫘"
+        },
+        {
+          "name": "Onion",
+          "amount": "1",
+          "image": "🧅"
+        },
+        {
+          "name": "Garlic",
+          "amount": "3 cloves",
+          "image": "🧄"
+        }
+      ],
+      "steps": "1. Brown beef. 2. Sauté onion and garlic. 3. Add tomatoes and beans. 4. Simmer 20 mins. 5. Season with chili powder. 6. Serve hot.",
+      "tags": [
+        "american",
+        "beef"
+      ],
+      "prepTime": "15m",
+      "cookTime": "30m",
+      "servings": "5",
+      "notes": "Top with cheese and sour cream",
+      "liked": false
+    },
+    {
+      "id": 16,
+      "title": "BBQ Ribs",
+      "ingredients": [
+        {
+          "name": "Pork Ribs",
+          "amount": "1kg",
+          "image": "🥩"
+        },
+        {
+          "name": "BBQ Sauce",
+          "amount": "200ml",
+          "image": "🍯"
+        },
+        {
+          "name": "Paprika",
+          "amount": "2 tbsp",
+          "image": "🌶️"
+        },
+        {
+          "name": "Garlic",
+          "amount": "4 cloves",
+          "image": "🧄"
+        },
+        {
+          "name": "Salt",
+          "amount": "2 tbsp",
+          "image": "🧂"
+        }
+      ],
+      "steps": "1. Rub ribs with spices. 2. Bake at 160°C for 2.5 hours. 3. Brush with BBQ sauce. 4. Bake 30 mins more. 5. Rest before serving.",
+      "tags": [
+        "american",
+        "barbecue"
+      ],
+      "prepTime": "20m",
+      "cookTime": "180m",
+      "servings": "4",
+      "notes": "",
+      "liked": false
+    },
+    {
+      "id": 17,
+      "title": "Grilled Chicken Breast",
+      "ingredients": [
+        {
+          "name": "Chicken Breast",
+          "amount": "4",
+          "image": "🍗"
+        },
+        {
+          "name": "Lemon",
+          "amount": "1",
+          "image": "🍋"
+        },
+        {
+          "name": "Olive Oil",
+          "amount": "3 tbsp",
+          "image": "🫒"
+        },
+        {
+          "name": "Garlic",
+          "amount": "3 cloves",
+          "image": "🧄"
+        },
+        {
+          "name": "Rosemary",
+          "amount": "2 sprigs",
+          "image": "🌿"
+        }
+      ],
+      "steps": "1. Marinate chicken in oil, lemon, garlic 30 mins. 2. Grill on high heat 6 mins each side. 3. Rest 5 mins. 4. Slice and serve.",
+      "tags": [
+        "healthy",
+        "chicken",
+        "quick"
+      ],
+      "prepTime": "35m",
+      "cookTime": "15m",
+      "servings": "4",
+      "notes": "",
+      "liked": false
+    },
+    {
+      "id": 18,
+      "title": "Lasagna Bolognese",
+      "ingredients": [
+        {
+          "name": "Pasta Sheets",
+          "amount": "12",
+          "image": "🍝"
+        },
+        {
+          "name": "Beef",
+          "amount": "500g",
+          "image": "🥩"
+        },
+        {
+          "name": "Tomato",
+          "amount": "400g",
+          "image": "🍅"
+        },
+        {
+          "name": "Ricotta",
+          "amount": "500g",
+          "image": "🧀"
+        },
+        {
+          "name": "Mozzarella",
+          "amount": "200g",
+          "image": "🧀"
+        }
+      ],
+      "steps": "1. Brown beef, add tomatoes and simmer 20 mins. 2. Layer: sauce, pasta, ricotta. 3. Repeat 3 times. 4. Top with mozzarella. 5. Bake at 180°C for 30 mins.",
+      "tags": [
+        "italian",
+        "beef",
+        "pasta"
+      ],
+      "prepTime": "20m",
+      "cookTime": "50m",
+      "servings": "6",
+      "notes": "",
+      "liked": false
+    },
+    {
+      "id": 19,
+      "title": "Shakshuka",
+      "ingredients": [
+        {
+          "name": "Egg",
+          "amount": "6",
+          "image": "🥚"
+        },
+        {
+          "name": "Tomato",
+          "amount": "400g canned",
+          "image": "🍅"
+        },
+        {
+          "name": "Onion",
+          "amount": "1",
+          "image": "🧅"
+        },
+        {
+          "name": "Garlic",
+          "amount": "3 cloves",
+          "image": "🧄"
+        },
+        {
+          "name": "Cumin",
+          "amount": "1 tsp",
+          "image": "🌶️"
+        }
+      ],
+      "steps": "1. Sauté onion and garlic. 2. Add tomatoes and spices. 3. Simmer 10 mins. 4. Create wells. 5. Crack eggs into wells. 6. Cover and cook 5 mins.",
+      "tags": [
+        "middle-eastern",
+        "vegetarian",
+        "breakfast"
+      ],
+      "prepTime": "10m",
+      "cookTime": "20m",
+      "servings": "3",
+      "notes": "Serve with pita bread",
+      "liked": false
+    },
+    {
+      "id": 20,
+      "title": "Hummus & Pita",
+      "ingredients": [
+        {
+          "name": "Chickpea",
+          "amount": "400g",
+          "image": "🫘"
+        },
+        {
+          "name": "Tahini",
+          "amount": "3 tbsp",
+          "image": "🍯"
+        },
+        {
+          "name": "Lemon",
+          "amount": "2",
+          "image": "🍋"
+        },
+        {
+          "name": "Garlic",
+          "amount": "2 cloves",
+          "image": "🧄"
+        },
+        {
+          "name": "Olive Oil",
+          "amount": "4 tbsp",
+          "image": "🫒"
+        }
+      ],
+      "steps": "1. Drain chickpeas. 2. Blend with tahini, lemon, garlic. 3. Add oil slowly while blending. 4. Season to taste. 5. Serve with warm pita.",
+      "tags": [
+        "middle-eastern",
+        "vegetarian",
+        "vegan"
+      ],
+      "prepTime": "10m",
+      "cookTime": "0m",
+      "servings": "4",
+      "notes": "Make 1 day ahead for best flavor",
+      "liked": false
+    },
+    {
+      "id": 21,
+      "title": "Mac and Cheese",
+      "ingredients": [
+        {
+          "name": "Pasta",
+          "amount": "400g",
+          "image": "🍝"
+        },
+        {
+          "name": "Cheddar",
+          "amount": "200g",
+          "image": "🧀"
+        },
+        {
+          "name": "Butter",
+          "amount": "50g",
+          "image": "🧈"
+        },
+        {
+          "name": "Milk",
+          "amount": "250ml",
+          "image": "🥛"
+        },
+        {
+          "name": "Breadcrumb",
+          "amount": "100g",
+          "image": "🍞"
+        }
+      ],
+      "steps": "1. Cook pasta. 2. Make roux with butter and flour. 3. Add milk, then cheese. 4. Toss with pasta. 5. Top with breadcrumb. 6. Bake at 180°C for 15 mins.",
+      "tags": [
+        "american",
+        "vegetarian",
+        "comfort"
+      ],
+      "prepTime": "15m",
+      "cookTime": "25m",
+      "servings": "4",
+      "notes": "",
+      "liked": false
+    },
+    {
+      "id": 22,
+      "title": "Brownies",
+      "ingredients": [
+        {
+          "name": "Chocolate",
+          "amount": "200g",
+          "image": "🍫"
+        },
+        {
+          "name": "Butter",
+          "amount": "150g",
+          "image": "🧈"
+        },
+        {
+          "name": "Egg",
+          "amount": "3",
+          "image": "🥚"
+        },
+        {
+          "name": "Sugar",
+          "amount": "200g",
+          "image": "🍬"
+        },
+        {
+          "name": "Flour",
+          "amount": "100g",
+          "image": "🌾"
+        }
+      ],
+      "steps": "1. Melt chocolate and butter. 2. Mix eggs and sugar. 3. Combine chocolate mixture with eggs. 4. Fold in flour. 5. Bake at 180°C for 25 mins. 6. Cool before serving.",
+      "tags": [
+        "dessert",
+        "sweet"
+      ],
+      "prepTime": "15m",
+      "cookTime": "25m",
+      "servings": "8",
+      "notes": "Fudgy center is best",
+      "liked": false
+    }
+  ]
+}
