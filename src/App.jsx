@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { marked } from 'marked'
 import IngredientBank from './IngredientBank'
 
-const API_URL = 'http://localhost:3001'
+const STORAGE_KEY = 'recipe-box.recipes'
+const THEME_KEY = 'recipe-box.theme'
 
 function normalizeInitialIngredients(arr){
   if (!arr) return []
@@ -70,97 +71,60 @@ function RecipeForm({ onCancel, onSave, initial }){
 }
 
 export default function App(){
-  const [recipes, setRecipes] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [recipes, setRecipes] = useState(() => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY)
+      if (stored) return JSON.parse(stored)
+    } catch (err) {
+      console.error('Failed to read recipes from localStorage:', err)
+    }
+    return []
+  })
   const [view, setView] = useState('list')
   const [editing, setEditing] = useState(null)
-  const [dark, setDark] = useState(()=>localStorage.getItem('theme')==='dark')
+  const [dark, setDark] = useState(() => localStorage.getItem(THEME_KEY) === 'dark')
   const [filter, setFilter] = useState('')
 
-  // Fetch recipes on mount
-  useEffect(()=>{
-    async function fetchRecipes(){
-      try{
-        const res = await fetch(`${API_URL}/recipes`)
-        const data = await res.json()
-        setRecipes(data)
-      }catch(err){
-        console.error('Failed to fetch recipes:', err)
-      }finally{
-        setLoading(false)
-      }
-    }
-    fetchRecipes()
-  }, [])
-
-  // Handle dark mode
   useEffect(()=>{
     document.body.classList.toggle('dark', dark)
-    localStorage.setItem('theme', dark ? 'dark' : 'light')
+    localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light')
   }, [dark])
 
-  async function addRecipe(r){
-    try{
-      const res = await fetch(`${API_URL}/recipes`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(r)
-      })
-      const newRecipe = await res.json()
-      setRecipes(prev=>[newRecipe,...prev])
-      setView('list')
-    }catch(err){
-      console.error('Failed to add recipe:', err)
-    }
+  useEffect(()=>{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(recipes))
+  }, [recipes])
+
+  function nextRecipeId(list){
+    return list.length ? Math.max(...list.map(recipe => recipe.id || 0)) + 1 : 1
   }
 
-  async function updateRecipe(r){
-    try{
-      const res = await fetch(`${API_URL}/recipes/${r.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(r)
-      })
-      const updated = await res.json()
-      setRecipes(prev=>prev.map(p=>p.id===r.id?updated:p))
-      setEditing(null)
-      setView('list')
-    }catch(err){
-      console.error('Failed to update recipe:', err)
-    }
+  function addRecipe(r){
+    const newRecipe = { ...r, id: nextRecipeId(recipes) }
+    setRecipes(prev => [newRecipe, ...prev])
+    setView('list')
   }
 
-  async function removeRecipe(id){
-    try{
-      await fetch(`${API_URL}/recipes/${id}`, { method: 'DELETE' })
-      setRecipes(prev=>prev.filter(p=>p.id!==id))
-    }catch(err){
-      console.error('Failed to delete recipe:', err)
-    }
+  function updateRecipe(r){
+    setRecipes(prev => prev.map(p => p.id === r.id ? r : p))
+    setEditing(null)
+    setView('list')
   }
 
-  async function toggleLike(id){
+  function removeRecipe(id){
+    setRecipes(prev => prev.filter(p => p.id !== id))
+  }
+
+  function toggleLike(id){
     const recipe = recipes.find(r=>r.id===id)
     if(!recipe) return
     const updated = {...recipe, liked: !recipe.liked}
-    try{
-      await fetch(`${API_URL}/recipes/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updated)
-      })
-      setRecipes(prev=>prev.map(p=>p.id===id?updated:p))
-    }catch(err){
-      console.error('Failed to toggle like:', err)
-    }
+    setRecipes(prev => prev.map(p => p.id === id ? updated : p))
   }
 
   const allTags = [...new Set(recipes.flatMap(r=>r.tags||[]))].filter(Boolean).sort()
   const filtered = filter ? recipes.filter(r=>(r.tags||[]).includes(filter)) : recipes
   const liked = filtered.filter(r=>r.liked)
   const notLiked = filtered.filter(r=>!r.liked)
-
-  if(loading) return <div className="app"><main style={{padding:'32px',marginTop:'80px'}}>Loading recipes...</main></div>
 
   return (
     <div className="app">
