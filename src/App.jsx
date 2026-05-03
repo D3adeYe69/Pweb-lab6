@@ -14,6 +14,12 @@ export default function App(){
   })
   const [view, setView] = useState('list')
   const [editing, setEditing] = useState(null)
+  const [dark, setDark] = useState(()=>localStorage.getItem('theme')==='dark')
+
+  useEffect(()=>{
+    document.body.classList.toggle('dark', dark)
+    localStorage.setItem('theme', dark ? 'dark' : 'light')
+  }, [dark])
 
   useEffect(()=>{ try{ localStorage.setItem('recipes', JSON.stringify(recipes)) }catch{} },[recipes])
 
@@ -25,9 +31,12 @@ export default function App(){
   return (
     <div className="app">
       <header>
-        <h1>Recipe Box</h1>
-        <div className="actions">
-          <button onClick={()=>{setEditing(null); setView('create')}}>New Recipe</button>
+        <div className="header-left">
+          <h1>🍳 Recipe Box</h1>
+        </div>
+        <div className="header-right">
+          <button className="theme-btn" onClick={()=>setDark(d=>!d)}>{dark?'☀️':'🌙'}</button>
+          <button onClick={()=>{setEditing(null); setView('create')}} className="new-btn">+ New Recipe</button>
         </div>
       </header>
 
