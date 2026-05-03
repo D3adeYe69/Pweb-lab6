@@ -1,5 +1,8 @@
 name: Build and deploy to docs
 
+permissions:
+  contents: write
+
 on:
   push:
     branches: [ main ]
@@ -12,6 +15,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true
 
       - name: Use Node.js 18
         uses: actions/setup-node@v4
@@ -34,4 +39,5 @@ jobs:
           cp -r dist docs
           git add docs
           git commit -m "docs: update production build [skip ci]" || echo "no changes to commit"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git push origin HEAD:main
