@@ -12,8 +12,11 @@ main{margin-top:18px}
 .card.liked{outline:2px solid rgba(14,165,233,0.12)}
 .recipe-form{display:flex;flex-direction:column;gap:12px}
 .recipe-form input,.recipe-form textarea{width:100%;padding:8px;border-radius:8px;border:1px solid #e6edf3}
-.ing-row{display:flex;gap:8px;align-items:center}
-.ing-emoji{font-size:28px}
+.ing-row{display:flex;gap:8px;align-items:center;background:var(--card);padding:10px;border-radius:8px;border:1px solid #e6edf3;margin-bottom:8px}
+.ing-emoji{font-size:28px;min-width:32px;text-align:center}
+.ing-row input{flex:1;min-width:100px}
+.ing-row button{padding:6px 10px;border-radius:6px;border:1px solid #e6edf3;background:transparent;cursor:pointer;white-space:nowrap}
+.ing-row button:hover{background:#f0f0f0}
 .form-actions{display:flex;gap:8px}
 .steps{background:transparent;padding:8px}
 .detail .steps{padding:8px;border-radius:8px;background:#fbfbfb}
