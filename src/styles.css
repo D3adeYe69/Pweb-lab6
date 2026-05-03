@@ -13,20 +13,28 @@ main{margin-top:18px}
 .recipe-form{display:flex;flex-direction:column;gap:12px}
 .recipe-form input,.recipe-form textarea{width:100%;padding:8px;border-radius:8px;border:1px solid #e6edf3}
 .ing-row{display:flex;gap:8px;align-items:center}
-.ing-thumb{width:40px;height:40px;border-radius:6px;object-fit:cover}
+.ing-emoji{font-size:28px}
 .form-actions{display:flex;gap:8px}
 .steps{background:transparent;padding:8px}
 .detail .steps{padding:8px;border-radius:8px;background:#fbfbfb}
 .detail-ing{display:flex;align-items:center;gap:8px;margin-bottom:6px}
-.detail-ing img{width:36px;height:36px;border-radius:6px;object-fit:cover}
+.detail-ing .emoji-icon{font-size:24px}
 .detail-ing .amt{color:var(--muted);margin-left:6px}
 
-.ingredient-bank{margin:8px 0}
-.bank-grid{display:flex;gap:8px;flex-wrap:wrap}
-.ingredient-card{width:96px;padding:8px;border-radius:8px;background:var(--card);box-shadow:0 6px 18px rgba(14,30,37,0.04);display:flex;flex-direction:column;align-items:center;gap:6px}
-.ingredient-card img{width:64px;height:64px;object-fit:cover;border-radius:8px}
-.ingredient-card .ing-name{font-size:13px}
-.ingredient-card button{padding:6px 8px;border-radius:6px;border:none;background:var(--accent);color:white;cursor:pointer}
+.ingredient-bank{margin:12px 0;border:1px solid #e6edf3;border-radius:8px;padding:12px;background:rgba(0,0,0,0.01)}
+.ingredient-bank h4{margin:0 0 12px 0}
+.bank-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px}
+.ingredient-card{padding:8px;border-radius:8px;background:var(--card);border:2px solid transparent;box-shadow:0 2px 6px rgba(14,30,37,0.04);display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;transition:all .15s ease}
+.ingredient-card:hover{box-shadow:0 4px 12px rgba(14,30,37,0.08)}
+.ingredient-card.selected{border-color:var(--accent);background:rgba(14,165,233,0.04)}
+.emoji-icon{font-size:32px}
+.ingredient-card .ing-name{font-size:12px;text-align:center}
+.ingredient-card input{width:100%;padding:4px;border-radius:4px;border:1px solid #e6edf3;font-size:11px}
+.ingredient-card button{padding:4px 8px;border-radius:4px;border:1px solid #e6edf3;background:transparent;cursor:pointer;font-size:12px}
+.ingredient-card button.selected{background:var(--accent);color:white;border:none}
+.bank-actions{display:flex;gap:8px;margin-top:12px}
+.submit-btn{padding:10px 14px;border-radius:8px;border:none;background:var(--accent);color:white;cursor:pointer}
+.cancel-btn{padding:10px 14px;border-radius:8px;border:1px solid #e6edf3;background:transparent;cursor:pointer}
 
 /* dark */
 body.dark{--bg:#071028;--fg:#e6eef8;--muted:#9fb0c8;--accent:#60a5fa;--card:#0f1720}

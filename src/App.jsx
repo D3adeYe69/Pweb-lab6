@@ -4,7 +4,7 @@ import IngredientBank from './IngredientBank'
 
 function sample() {
   return [
-    { id: 1, title: 'Pancakes', ingredients: [ { name: 'Flour', amount: '1 cup', image: 'https://via.placeholder.com/80?text=Flour' }, { name: 'Egg', amount: '1', image: 'https://via.placeholder.com/80?text=Egg' }, { name: 'Milk', amount: '1 cup', image: 'https://via.placeholder.com/80?text=Milk' } ], steps: 'Mix ingredients. Cook on skillet.', tags: ['breakfast'], prepTime: '10m', cookTime: '10m', servings: '2', notes: '', liked: false }
+    { id: 1, title: 'Pancakes', ingredients: [ { name: 'Flour', amount: '1 cup', image: '🌾' }, { name: 'Egg', amount: '1', image: '🥚' }, { name: 'Milk', amount: '1 cup', image: '🥛' } ], steps: 'Mix ingredients. Cook on skillet.', tags: ['breakfast'], prepTime: '10m', cookTime: '10m', servings: '2', notes: '', liked: false }
   ]
 }
 
@@ -67,7 +67,7 @@ export default function App(){
             <h4>Ingredients</h4>
             <ul>{(editing.ingredients||[]).map((ing,i)=>(
               <li key={i} className="detail-ing">
-                {ing.image && <img src={ing.image} alt={ing.name} />}
+                {ing.image && <span className="emoji-icon">{ing.image}</span>}
                 <strong>{ing.name}</strong>
                 {ing.amount && <span className="amt"> — {ing.amount}</span>}
               </li>
@@ -98,8 +98,8 @@ function RecipeForm({ onCancel, onSave, initial }){
   const [servings, setServings] = useState(initial?.servings||'')
   const [notes, setNotes] = useState(initial?.notes||'')
 
-  function addIngredientFromBank(item){
-    setIngredients(prev => [{ name: item.name, amount: '', image: item.image }, ...prev])
+  function addIngredientsFromBank(items){
+    setIngredients(prev => [...items, ...prev])
   }
 
   function save(e){
@@ -119,10 +119,10 @@ function RecipeForm({ onCancel, onSave, initial }){
 
       <div className="row">
         <label>Ingredients</label>
-        <IngredientBank onAdd={addIngredientFromBank} />
+        <IngredientBank onBatchAdd={addIngredientsFromBank} />
         {ingredients.map((ing,i)=> (
           <div key={i} className="ing-row">
-            {ing.image && <img src={ing.image} alt={ing.name} className="ing-thumb" />}
+            {ing.image && <span className="ing-emoji">{ing.image}</span>}
             <input value={ing.name} onChange={e=>{ const copy=[...ingredients]; copy[i]={...copy[i], name:e.target.value}; setIngredients(copy)}} placeholder="Ingredient name" />
             <input value={ing.amount} onChange={e=>{ const copy=[...ingredients]; copy[i]={...copy[i], amount:e.target.value}; setIngredients(copy)}} placeholder="Amount (e.g. 1 cup)" />
             <button type="button" onClick={()=>setIngredients(prev=>prev.filter((_,idx)=>idx!==i))}>Remove</button>
