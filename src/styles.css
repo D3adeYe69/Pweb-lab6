@@ -1,0 +1,21 @@
+:root{--bg:#ffffff;--fg:#0f1720;--muted:#556070;--accent:#0ea5ff;--card:#ffffff}
+body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--fg)}
+.app{max-width:1000px;margin:28px auto;padding:20px}
+header{display:flex;justify-content:space-between;align-items:center}
+header h1{margin:0}
+.actions button{padding:8px 12px;border-radius:8px;border:none;background:var(--accent);color:white;cursor:pointer}
+main{margin-top:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.card{background:var(--card);padding:14px;border-radius:12px;box-shadow:0 6px 18px rgba(14,30,37,0.06)}
+.card .tag{background:rgba(0,0,0,0.04);padding:4px 8px;border-radius:999px;margin-right:6px;font-size:12px}
+.card-actions{display:flex;gap:8px;margin-top:12px}
+.card.liked{outline:2px solid rgba(14,165,233,0.12)}
+.recipe-form{display:flex;flex-direction:column;gap:12px}
+.recipe-form input,.recipe-form textarea{width:100%;padding:8px;border-radius:8px;border:1px solid #e6edf3}
+.ing-row{display:flex;gap:8px}
+.form-actions{display:flex;gap:8px}
+.steps{background:transparent;padding:8px}
+.detail .steps{padding:8px;border-radius:8px;background:#fbfbfb}
+
+/* dark */
+body.dark{--bg:#071028;--fg:#e6eef8;--muted:#9fb0c8;--accent:#60a5fa;--card:#0f1720}
