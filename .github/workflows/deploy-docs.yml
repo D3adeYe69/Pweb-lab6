@@ -1,0 +1,37 @@
+name: Build and deploy to docs
+
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - 'docs/**'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to docs/
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm -rf docs
+          cp -r dist docs
+          git add docs
+          git commit -m "docs: update production build [skip ci]" || echo "no changes to commit"
+          git push origin HEAD:main
