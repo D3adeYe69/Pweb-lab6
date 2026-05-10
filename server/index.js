@@ -3,6 +3,8 @@ const cors = require('cors')
 const jwt = require('jsonwebtoken')
 const swaggerUi = require('swagger-ui-express')
 const swaggerJSDoc = require('swagger-jsdoc')
+const fs = require('fs')
+const path = require('path')
 
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -16,8 +18,33 @@ const ROLE_PERMISSIONS = {
 }
 const VALID_PERMISSIONS = ['READ', 'WRITE', 'DELETE']
 
-let recipes = []
-let nextId = 1
+const DB_FILE = path.join(__dirname, '..', 'db.json')
+
+function loadDatabase() {
+  try {
+    if (fs.existsSync(DB_FILE)) {
+      const data = JSON.parse(fs.readFileSync(DB_FILE, 'utf8'))
+      return data
+    }
+  } catch (err) {
+    console.error('Error loading database:', err.message)
+  }
+  return { recipes: [], nextId: 1 }
+}
+
+function saveDatabase(db) {
+  try {
+    fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2), 'utf8')
+  } catch (err) {
+    console.error('Error saving database:', err.message)
+  }
+}
+
+let db = loadDatabase()
+const getRecipes = () => db.recipes
+const getNextId = () => db.nextId
+const incrementNextId = () => { db.nextId += 1; saveDatabase(db) }
+const setRecipes = (newRecipes) => { db.recipes = newRecipes; saveDatabase(db) }
 
 app.use(cors())
 app.use(express.json())
@@ -199,6 +226,7 @@ app.get('/api/recipes', authMiddleware, requirePermission('READ'), (req, res) =>
   }
 
   const { limit, offset } = pagination
+  const recipes = getRecipes()
   const items = recipes.slice(offset, offset + limit)
 
   return res.status(200).json({
@@ -214,6 +242,7 @@ app.get('/api/recipes', authMiddleware, requirePermission('READ'), (req, res) =>
 
 app.get('/api/recipes/:id', authMiddleware, requirePermission('READ'), (req, res) => {
   const id = Number.parseInt(req.params.id, 10)
+  const recipes = getRecipes()
   const recipe = recipes.find((item) => item.id === id)
 
   if (!recipe) {
@@ -230,18 +259,21 @@ app.post('/api/recipes', authMiddleware, requirePermission('WRITE'), (req, res) 
   }
 
   const newRecipe = {
-    id: nextId,
+    id: getNextId(),
     ...payload
   }
 
-  nextId += 1
+  incrementNextId()
+  const recipes = getRecipes()
   recipes.unshift(newRecipe)
+  setRecipes(recipes)
 
   return res.status(201).json(newRecipe)
 })
 
 app.put('/api/recipes/:id', authMiddleware, requirePermission('WRITE'), (req, res) => {
   const id = Number.parseInt(req.params.id, 10)
+  const recipes = getRecipes()
   const index = recipes.findIndex((item) => item.id === id)
 
   if (index === -1) {
@@ -259,11 +291,13 @@ app.put('/api/recipes/:id', authMiddleware, requirePermission('WRITE'), (req, re
   }
 
   recipes[index] = updatedRecipe
+  setRecipes(recipes)
   return res.status(200).json(updatedRecipe)
 })
 
 app.delete('/api/recipes/:id', authMiddleware, requirePermission('DELETE'), (req, res) => {
   const id = Number.parseInt(req.params.id, 10)
+  const recipes = getRecipes()
   const index = recipes.findIndex((item) => item.id === id)
 
   if (index === -1) {
@@ -271,6 +305,7 @@ app.delete('/api/recipes/:id', authMiddleware, requirePermission('DELETE'), (req
   }
 
   recipes.splice(index, 1)
+  setRecipes(recipes)
   return res.status(204).send()
 })
 
@@ -474,4 +509,5 @@ app.use((req, res) => {
 app.listen(PORT, () => {
   console.log(`API server running on http://localhost:${PORT}`)
   console.log(`Swagger UI available on http://localhost:${PORT}/docs`)
+  console.log(`Data file: ${DB_FILE}`)
 })
